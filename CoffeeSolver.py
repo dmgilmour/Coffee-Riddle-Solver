@@ -12,22 +12,23 @@ def findMax(employees):
 
 
 
-if len(sys.argv) != 4 and len(sys.argv) != 6:
+if len(sys.argv) != 4 or len(sys.argv) != 6:
 	print("Invalid arguments")
 	print("Usage: CoffeeSolver.py  [num_simulations]  [optimal_solution_precision]  [fake_mean_precision]  [<lower_range_to_test>] [<upper_range_to_test>]")
-
+	exit(1)
 
 
 num_simulations = int(sys.argv[1])
 num_employees = int(sys.argv[2])
 fake_mean_precision = int(sys.argv[3])
 
-if len(sys.argv) == 6:
+if len(sys.argv) >= 6:
 	lower_range = float(sys.argv[4])
 	upper_range = float(sys.argv[5])
 else:
 	lower_range = 0
 	upper_range = 1
+
 
 # How much to separate each standard test employee by
 employee_diff = 1.0 / num_employees
@@ -47,9 +48,9 @@ for fake_mean in fake_mean_list:
 	# the previously calculated employee_diff
 	employees = [[(employee_diff * i), 0] for i in range(1, num_employees)]
 
-	# Add 2 times as many fake employees as real employees to outweigh
+	# Add 4 times as many fake employees as real employees to outweigh
 	# the employees even as optimal solution precision changes
-	for i in range(num_employees * 2):
+	for i in range(num_employees * 4):
 		employees.append([fake_mean, 0])
 
 	# Run the number of simulations requested
